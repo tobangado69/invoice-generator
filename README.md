@@ -26,10 +26,10 @@
 - ✅ Invoice management (draft, sent, paid, overdue)
 
 ### Technical Features
-- ✅ Bilingual UI (Bahasa Indonesia & English)
+- ✅ Indonesian-first UI (Bahasa Indonesia)
 - ✅ Mobile-responsive design
-- ✅ Secure authentication
-- ✅ SQLite database
+- ✅ Secure authentication with NextAuth v5
+- ✅ SQLite database (upgradeable to PostgreSQL)
 - ✅ Real-time calculations
 - ✅ Type-safe with TypeScript
 
@@ -57,9 +57,9 @@
    Create `.env.local` file in the root directory:
    ```env
    DATABASE_URL="file:./dev.db"
-   BETTER_AUTH_SECRET="your-secret-key-change-this"
-   BETTER_AUTH_URL="http://localhost:3000"
-   NEXT_PUBLIC_APP_URL="http://localhost:3000"
+   NEXTAUTH_SECRET="your-secret-key-change-this"
+   AUTH_URL="http://localhost:3000"
+   AUTH_TRUST_HOST="true"
    ```
 
 4. **Initialize database:**
@@ -188,12 +188,13 @@ Invoice Generator/
 │   │   ├── login/
 │   │   └── register/
 │   ├── api/                 # API routes
-│   │   ├── auth/           # Better Auth endpoints
+│   │   ├── auth/           # NextAuth endpoints
 │   │   ├── company/        # Company profile API
 │   │   └── invoices/       # Invoice CRUD + PDF
+│   ├── dashboard/          # Dashboard page
 │   ├── invoices/           # Invoice pages
 │   ├── profile/            # Company profile page
-│   └── page.tsx            # Dashboard
+│   └── page.tsx            # Landing page
 ├── components/
 │   ├── ui/                 # Base UI components (shadcn/ui)
 │   ├── invoice-form.tsx    # Invoice creation form
@@ -205,13 +206,13 @@ Invoice Generator/
 │   ├── use-company.ts      # Company profile hooks
 │   └── use-invoices.ts     # Invoice CRUD hooks
 ├── lib/
-│   ├── indonesian-utils.ts # Indonesian utilities
+│   ├── indonesian-utils.ts # Indonesian utilities (terbilang, PPN, NPWP)
 │   ├── validations.ts      # Zod validation schemas
 │   ├── prisma.ts           # Prisma client
-│   ├── auth.ts             # Better Auth config
+│   ├── auth.ts             # NextAuth v5 config
 │   ├── auth-client.ts      # Auth client utilities
 │   └── pdf/
-│       └── invoice-template.tsx # PDF template
+│       └── invoice-template.tsx # PDF template (pdf-lib)
 ├── types/
 │   └── invoice.ts          # TypeScript types
 ├── prisma/
@@ -237,9 +238,9 @@ Invoice Generator/
 ### Backend
 - **Next.js API Routes** - Backend API
 - **Prisma** - ORM
-- **SQLite** - Database
-- **Better Auth** - Authentication
-- **@react-pdf/renderer** - PDF generation
+- **SQLite** - Database (production: PostgreSQL)
+- **NextAuth v5** - Authentication
+- **pdf-lib** - PDF generation
 
 ### Indonesian Utilities
 - **formatIDR()** - Currency formatting
@@ -394,19 +395,21 @@ npm run db:reset  # WARNING: This deletes all data
 ### Authentication Issues
 
 **Can't login after registration**
-- Check that BETTER_AUTH_SECRET is set in .env.local
+- Check that NEXTAUTH_SECRET is set in .env.local
+- Check that AUTH_URL matches your localhost
 - Try clearing browser cookies
 
 **Session expires too quickly**
 - Session duration: 7 days (configured in lib/auth.ts)
-- Update age: 1 day
+- JWT strategy for stateless sessions
 
 ### PDF Generation Issues
 
 **PDF download fails**
 - Ensure company profile is complete
 - Check console for errors
-- Verify @react-pdf/renderer is installed
+- Verify pdf-lib is installed
+- Check if all invoice fields are filled
 
 **PDF shows "Company data not found"**
 - Complete your profile first at /profile
@@ -421,9 +424,9 @@ npm run db:reset  # WARNING: This deletes all data
 1. **Environment Variables:**
    ```env
    DATABASE_URL="your-production-database-url"
-   BETTER_AUTH_SECRET="use-strong-secret-key"
-   BETTER_AUTH_URL="https://yourdomain.com"
-   NEXT_PUBLIC_APP_URL="https://yourdomain.com"
+   NEXTAUTH_SECRET="use-strong-secret-key-min-32-chars"
+   AUTH_URL="https://yourdomain.com"
+   AUTH_TRUST_HOST="true"
    ```
 
 2. **Database:**
@@ -432,8 +435,9 @@ npm run db:reset  # WARNING: This deletes all data
    - Run migrations on production database
 
 3. **Security:**
-   - Change BETTER_AUTH_SECRET to strong random value
+   - Generate NEXTAUTH_SECRET: `openssl rand -base64 32`
    - Enable HTTPS
+   - Set AUTH_TRUST_HOST=true for production
    - Review CORS settings if needed
 
 4. **Deployment Platforms:**
@@ -456,10 +460,12 @@ npm run db:reset  # WARNING: This deletes all data
 - NPWP regex validation
 
 **API Routes** (`app/api/`):
-- `/api/auth/*` - Authentication
-- `/api/company` - Company profile
+- `/api/auth/[...nextauth]` - NextAuth v5 handlers
+- `/api/auth/register` - User registration
+- `/api/company` - Company profile CRUD
 - `/api/invoices` - Invoice CRUD
 - `/api/invoices/[id]/pdf` - PDF generation
+- `/api/invoices/[id]/download-pdf` - PDF download
 
 **React Query Hooks** (`hooks/`):
 - `useAuth()` - Authentication state
@@ -489,8 +495,9 @@ export const PAYMENT_TERMS_PRESETS = [
 ### Modify PDF Template
 Edit `lib/pdf/invoice-template.tsx` to customize:
 - Colors, fonts, layout
-- Add company logo
+- Add company logo (upload feature)
 - Additional fields
+- Uses pdf-lib for PDF generation
 
 ---
 
@@ -500,8 +507,8 @@ Edit `lib/pdf/invoice-template.tsx` to customize:
 - **Indonesian Features:** See `docs/indonesian-market-features.md`
 - **Technical Guide:** See `docs/technical-implementation-guide.md`
 - **Prisma Docs:** https://www.prisma.io/docs
-- **Better Auth Docs:** https://www.better-auth.com
-- **Next.js Docs:** https://nextjs.org/docs
+- **NextAuth v5 Docs:** https://authjs.dev
+- **Next.js 15 Docs:** https://nextjs.org/docs
 
 ---
 

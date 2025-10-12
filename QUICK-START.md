@@ -15,9 +15,9 @@ npm install
 Create `.env.local` file in root directory:
 ```env
 DATABASE_URL="file:./dev.db"
-BETTER_AUTH_SECRET="your-secret-key-change-this"
-BETTER_AUTH_URL="http://localhost:3000"
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key-change-this"
+AUTH_URL="http://localhost:3000"
+AUTH_TRUST_HOST="true"
 ```
 
 ### 3️⃣ Initialize Database (30 seconds)
