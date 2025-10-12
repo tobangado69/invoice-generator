@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime? @map("email_verified")
+  password      String    @map("password_hash")
+  image         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  
+  accounts      Account[]
+  sessions      Session[]
+  company       Company?
+  invoices      Invoice[]
+  
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Company {
+  id                Int      @id @default(autoincrement())
+  userId            String   @unique @map("user_id")
+  name              String
+  businessEntity    String?  @map("business_entity")
+  address           String?
+  phone             String?
+  email             String?
+  npwp              String?
+  isPkp             Boolean  @default(false) @map("is_pkp")
+  bankName          String?  @map("bank_name")
+  bankAccountNumber String?  @map("bank_account_number")
+  bankAccountHolder String?  @map("bank_account_holder")
+  logoUrl           String?  @map("logo_url")
+  defaultPpnRate    Float    @default(11.0) @map("default_ppn_rate")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("companies")
+}
+
+model Invoice {
+  id             Int           @id @default(autoincrement())
+  userId         String        @map("user_id")
+  invoiceNumber  String        @unique @map("invoice_number")
+  clientName     String        @map("client_name")
+  clientEmail    String?       @map("client_email")
+  clientAddress  String?       @map("client_address")
+  clientNpwp     String?       @map("client_npwp")
+  issueDate      DateTime      @map("issue_date")
+  dueDate        DateTime      @map("due_date")
+  subtotal       Float
+  ppnRate        Float         @default(0) @map("ppn_rate")
+  ppnAmount      Float         @default(0) @map("ppn_amount")
+  totalAmount    Float         @map("total_amount")
+  amountInWords  String?       @map("amount_in_words")
+  currency       String        @default("IDR")
+  notes          String?
+  paymentTerms   String?       @map("payment_terms")
+  status         String        @default("draft")
+  pdfPath        String?       @map("pdf_path")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+  
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items          InvoiceItem[]
+  
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          Int      @id @default(autoincrement())
+  invoiceId   Int      @map("invoice_id")
+  description String
+  quantity    Float    @default(1)
+  rate        Float
+  amount      Float
+  createdAt   DateTime @default(now()) @map("created_at")
+  
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  @@map("invoice_items")
+}
+
