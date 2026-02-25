@@ -15,16 +15,15 @@ export default function InvoicesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Semua Invoice / All Invoices</h1>
+          <h1 className="text-3xl font-bold">All Invoices</h1>
           <p className="text-gray-600 mt-1">
-            Kelola dan lacak semua faktur Anda / Manage and track all your
-            invoices
+            Manage and track all your invoices
           </p>
         </div>
         <Link href="/invoices/new">
           <Button>
             <Plus className="w-4 h-4 mr-2" />
-            Buat Baru / Create New
+            Create New
           </Button>
         </Link>
       </div>

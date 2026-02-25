@@ -37,11 +37,11 @@ export default function InvoiceDetailPage() {
         <Link href="/invoices">
           <Button variant="ghost">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            {t("nav.back")}
+            Back
           </Button>
         </Link>
         <div className="text-center py-12">
-          <p className="text-muted-foreground">{t("error.notFound")}</p>
+          <p className="text-muted-foreground">Invoice not found</p>
         </div>
       </div>
     );
@@ -52,7 +52,7 @@ export default function InvoiceDetailPage() {
       <Link href="/invoices">
         <Button variant="ghost">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          {t("nav.backToList")}
+          Back to Invoices
         </Button>
       </Link>
       <InvoicePreview invoice={data.data} />

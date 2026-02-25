@@ -85,8 +85,8 @@ export default function ProfilePage() {
     // Validate NPWP if provided
     if (npwp && !validateNPWP(npwp) && npwp.length === 15) {
       toast({
-        title: "NPWP tidak valid",
-        description: "Format NPWP: XX.XXX.XXX.X-XXX.XXX",
+        title: "Invalid tax ID",
+        description: "Tax ID format: XX.XXX.XXX.X-XXX.XXX",
         variant: "destructive",
       });
       return;
@@ -108,13 +108,13 @@ export default function ProfilePage() {
       });
 
       toast({
-        title: "Profil berhasil disimpan",
-        description: "Informasi perusahaan Anda telah diperbarui",
+        title: "Profile saved successfully",
+        description: "Your company information has been updated",
       });
     } catch (error) {
       toast({
-        title: "Kesalahan",
-        description: "Gagal menyimpan profil",
+        title: "Error",
+        description: "Failed to save profile",
         variant: "destructive",
       });
     }
@@ -142,27 +142,27 @@ export default function ProfilePage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">
-          Profil Perusahaan / Company Profile
+          Company Profile
         </h1>
         <p className="text-gray-600 mt-1">
-          Kelola informasi bisnis Anda / Manage your business information
+          Manage your business information
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Informasi Dasar / Basic Information</CardTitle>
+          <CardTitle>Basic Information</CardTitle>
           <CardDescription>
-            Data utama perusahaan Anda / Your company's primary information
+            Your company's primary information
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Nama Perusahaan / Company Name *</Label>
+              <Label htmlFor="name">Company Name *</Label>
               <Input
                 id="name"
-                placeholder="PT. Contoh Perusahaan"
+                placeholder="Example Company Inc."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -170,11 +170,11 @@ export default function ProfilePage() {
 
             <div className="space-y-2">
               <Label htmlFor="businessEntity">
-                Bentuk Usaha / Business Entity
+                Business Entity
               </Label>
               <Select value={businessEntity} onValueChange={setBusinessEntity}>
                 <SelectTrigger id="businessEntity">
-                  <SelectValue placeholder="Pilih bentuk usaha / Select entity" />
+                  <SelectValue placeholder="Select business entity" />
                 </SelectTrigger>
                 <SelectContent>
                   {BUSINESS_ENTITIES.map((entity) => (
@@ -193,14 +193,14 @@ export default function ProfilePage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="nama@perusahaan.com"
+                placeholder="name@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Telepon / Phone</Label>
+              <Label htmlFor="phone">Phone</Label>
               <Input
                 id="phone"
                 placeholder="+62 21 1234 5678"
@@ -211,7 +211,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="address">Alamat / Address</Label>
+            <Label htmlFor="address">Address</Label>
             <Input
               id="address"
               placeholder="Jl. Sudirman No. 123, Jakarta"
@@ -224,10 +224,9 @@ export default function ProfilePage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Informasi Pajak / Tax Information</CardTitle>
+          <CardTitle>Tax Information</CardTitle>
           <CardDescription>
-            NPWP dan status PKP untuk kepatuhan perpajakan / NPWP and PKP status
-            for tax compliance
+            Tax ID and taxable entity status for tax compliance
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -242,12 +241,12 @@ export default function ProfilePage() {
                 maxLength={20}
               />
               {npwp && !validateNPWP(npwp) && npwp.length >= 15 && (
-                <p className="text-sm text-red-500">NPWP tidak valid</p>
+                <p className="text-sm text-red-500">Invalid tax ID</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="defaultPpnRate">PPN Default (%)</Label>
+              <Label htmlFor="defaultPpnRate">Default VAT Rate (%)</Label>
               <Input
                 id="defaultPpnRate"
                 type="number"
@@ -264,13 +263,12 @@ export default function ProfilePage() {
           <div className="flex items-center space-x-2">
             <Switch id="isPkp" checked={isPkp} onCheckedChange={setIsPkp} />
             <Label htmlFor="isPkp" className="cursor-pointer">
-              Pengusaha Kena Pajak (PKP)
+              Taxable Entity (PKP)
             </Label>
           </div>
           {isPkp && (
             <p className="text-sm text-gray-600">
-              Status PKP memungkinkan Anda memungut PPN / PKP status allows you
-              to collect VAT
+              PKP status allows you to collect VAT
             </p>
           )}
         </CardContent>
@@ -278,19 +276,18 @@ export default function ProfilePage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Informasi Bank / Bank Information</CardTitle>
+          <CardTitle>Bank Information</CardTitle>
           <CardDescription>
-            Detail rekening untuk instruksi pembayaran / Account details for
-            payment instructions
+            Account details for payment instructions
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="bankName">Nama Bank / Bank Name</Label>
+              <Label htmlFor="bankName">Bank Name</Label>
               <Input
                 id="bankName"
-                placeholder="Bank BCA, Mandiri, BNI, dll"
+                placeholder="Bank BCA, Mandiri, BNI, etc."
                 value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
               />
@@ -298,7 +295,7 @@ export default function ProfilePage() {
 
             <div className="space-y-2">
               <Label htmlFor="bankAccountNumber">
-                Nomor Rekening / Account Number
+                Account Number
               </Label>
               <Input
                 id="bankAccountNumber"
@@ -311,11 +308,11 @@ export default function ProfilePage() {
 
           <div className="space-y-2">
             <Label htmlFor="bankAccountHolder">
-              Nama Pemilik Rekening / Account Holder Name
+              Account Holder Name
             </Label>
             <Input
               id="bankAccountHolder"
-              placeholder="PT. Contoh Perusahaan"
+                placeholder="Example Company Inc."
               value={bankAccountHolder}
               onChange={(e) => setBankAccountHolder(e.target.value)}
             />
@@ -330,8 +327,8 @@ export default function ProfilePage() {
           size="lg"
         >
           {updateCompany.isPending
-            ? "Menyimpan... / Saving..."
-            : "Simpan Profil / Save Profile"}
+            ? "Saving..."
+            : "Save Profile"}
         </Button>
       </div>
     </div>

@@ -82,19 +82,19 @@ function ClientForm({
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label>Nama Klien / Client Name *</Label>
+          <Label>Client Name *</Label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="PT. Contoh Klien"
+            placeholder="Example Client Inc."
           />
         </div>
         <div className="space-y-2">
-          <Label>Kontak / Contact Person</Label>
+          <Label>Contact Person</Label>
           <Input
             value={contactPerson}
             onChange={(e) => setContactPerson(e.target.value)}
-            placeholder="Nama kontak"
+            placeholder="Contact name"
           />
         </div>
       </div>
@@ -105,11 +105,11 @@ function ClientForm({
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="klien@email.com"
+            placeholder="client@email.com"
           />
         </div>
         <div className="space-y-2">
-          <Label>Telepon / Phone</Label>
+          <Label>Phone</Label>
           <Input
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -118,7 +118,7 @@ function ClientForm({
         </div>
       </div>
       <div className="space-y-2">
-        <Label>Alamat / Address</Label>
+        <Label>Address</Label>
         <Textarea
           value={address}
           onChange={(e) => setAddress(e.target.value)}
@@ -136,24 +136,24 @@ function ClientForm({
             maxLength={20}
           />
           {npwp && !validateNPWP(npwp) && npwp.length >= 15 && (
-            <p className="text-sm text-red-500">Format NPWP tidak valid</p>
+            <p className="text-sm text-red-500">Invalid tax ID format</p>
           )}
         </div>
         <div className="space-y-2">
-          <Label>Catatan / Notes</Label>
+          <Label>Notes</Label>
           <Input
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="Catatan tambahan"
+            placeholder="Additional notes"
           />
         </div>
       </div>
       <div className="flex justify-end gap-2 pt-2">
         <Button variant="outline" onClick={onCancel} disabled={isPending}>
-          Batal
+          Cancel
         </Button>
         <Button onClick={handleSubmit} disabled={!name.trim() || isPending}>
-          {isPending ? "Menyimpan..." : client ? "Perbarui" : "Simpan"}
+          {isPending ? "Saving..." : client ? "Update" : "Save"}
         </Button>
       </div>
     </div>
@@ -179,10 +179,10 @@ export default function ClientsPage() {
   const handleCreate = async (data: Partial<Client>) => {
     try {
       await createMutation.mutateAsync(data);
-      toast({ title: "Klien ditambahkan", description: `${data.name} berhasil disimpan` });
+      toast({ title: "Client added", description: `${data.name} saved successfully` });
       setDialogOpen(false);
     } catch {
-      toast({ title: "Error", description: "Gagal menambahkan klien", variant: "destructive" });
+      toast({ title: "Error", description: "Failed to add client", variant: "destructive" });
     }
   };
 
@@ -190,21 +190,21 @@ export default function ClientsPage() {
     if (!editingClient) return;
     try {
       await updateMutation.mutateAsync({ id: editingClient.id, data });
-      toast({ title: "Klien diperbarui", description: `${data.name} berhasil diperbarui` });
+      toast({ title: "Client updated", description: `${data.name} updated successfully` });
       setEditingClient(undefined);
       setDialogOpen(false);
     } catch {
-      toast({ title: "Error", description: "Gagal memperbarui klien", variant: "destructive" });
+      toast({ title: "Error", description: "Failed to update client", variant: "destructive" });
     }
   };
 
   const handleDelete = async (client: Client) => {
-    if (!confirm(`Hapus klien "${client.name}"?`)) return;
+    if (!confirm(`Delete client "${client.name}"?`)) return;
     try {
       await deleteMutation.mutateAsync(client.id);
-      toast({ title: "Klien dihapus", description: `${client.name} berhasil dihapus` });
+      toast({ title: "Client deleted", description: `${client.name} deleted successfully` });
     } catch {
-      toast({ title: "Error", description: "Gagal menghapus klien", variant: "destructive" });
+      toast({ title: "Error", description: "Failed to delete client", variant: "destructive" });
     }
   };
 
@@ -223,28 +223,28 @@ export default function ClientsPage() {
       <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold">
-            Klien / Clients
+            Clients
           </h1>
           <p className="text-muted-foreground">
-            Kelola database klien Anda / Manage your client database
+            Manage your client database
           </p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button onClick={openCreate}>
               <Plus className="w-4 h-4 mr-2" />
-              Tambah Klien
+              Add Client
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>
-                {editingClient ? "Edit Klien" : "Tambah Klien Baru"}
+                {editingClient ? "Edit Client" : "Add New Client"}
               </DialogTitle>
               <DialogDescription>
                 {editingClient
-                  ? "Perbarui informasi klien"
-                  : "Tambahkan klien baru ke database Anda"}
+                  ? "Update client information"
+                  : "Add a new client to your database"}
               </DialogDescription>
             </DialogHeader>
             <ClientForm
@@ -262,7 +262,7 @@ export default function ClientsPage() {
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Cari klien..."
+          placeholder="Search clients..."
           className="pl-10"
         />
       </div>
@@ -278,17 +278,17 @@ export default function ClientsPage() {
           <CardContent className="py-16 text-center">
             <Users className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
             <h3 className="text-lg font-medium mb-2">
-              {search ? "Tidak ada hasil" : "Belum ada klien"}
+              {search ? "No results" : "No clients yet"}
             </h3>
             <p className="text-muted-foreground mb-4">
               {search
-                ? "Coba kata kunci lain"
-                : "Tambahkan klien pertama Anda untuk memulai"}
+                ? "Try a different keyword"
+                : "Add your first client to get started"}
             </p>
             {!search && (
               <Button onClick={openCreate}>
                 <Plus className="w-4 h-4 mr-2" />
-                Tambah Klien
+                Add Client
               </Button>
             )}
           </CardContent>

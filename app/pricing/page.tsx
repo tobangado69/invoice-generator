@@ -12,36 +12,36 @@ export default function PricingPage() {
   const plans = Object.values(PLANS);
 
   const comparisonFeatures = [
-    { label: "Invoice per bulan", key: "invoicesPerMonth" as const },
-    { label: "Jumlah klien", key: "clients" as const },
-    { label: "Unduh PDF", key: "pdfDownloads" as const },
-    { label: "Branding kustom", key: "customBranding" as const },
-    { label: "Dukungan prioritas", key: "prioritySupport" as const },
-    { label: "Invoice berulang", key: "recurringInvoices" as const },
-    { label: "Multi mata uang", key: "multiCurrency" as const },
-    { label: "Anggota tim", key: "teamMembers" as const },
+    { label: "Invoices per month", key: "invoicesPerMonth" as const },
+    { label: "Number of clients", key: "clients" as const },
+    { label: "PDF Downloads", key: "pdfDownloads" as const },
+    { label: "Custom branding", key: "customBranding" as const },
+    { label: "Priority support", key: "prioritySupport" as const },
+    { label: "Recurring invoices", key: "recurringInvoices" as const },
+    { label: "Multi-currency", key: "multiCurrency" as const },
+    { label: "Team members", key: "teamMembers" as const },
   ] as const;
 
   const faqs = [
     {
-      q: "Apakah ada biaya tersembunyi?",
-      a: "Tidak. Harga yang tertera sudah termasuk semua fitur yang disebutkan. Tidak ada biaya setup, biaya per-invoice, atau biaya tambahan lainnya.",
+      q: "Are there any hidden fees?",
+      a: "No. The listed price includes all mentioned features. There are no setup fees, per-invoice fees, or any other additional charges.",
     },
     {
-      q: "Bisakah saya upgrade atau downgrade kapan saja?",
-      a: "Ya, Anda bisa upgrade atau downgrade paket kapan saja. Perubahan akan berlaku di periode billing berikutnya.",
+      q: "Can I upgrade or downgrade at any time?",
+      a: "Yes, you can upgrade or downgrade your plan at any time. Changes will take effect in the next billing period.",
     },
     {
-      q: "Apakah data saya aman?",
-      a: "Ya, kami menggunakan enkripsi end-to-end dan server yang berlokasi di Indonesia untuk memastikan keamanan data Anda.",
+      q: "Is my data secure?",
+      a: "Yes, we use end-to-end encryption and servers located in Indonesia to ensure your data security.",
     },
     {
-      q: "Bagaimana cara pembayaran?",
-      a: "Kami menerima transfer bank (BCA, Mandiri, BNI, BRI), e-wallet (GoPay, OVO, DANA), dan kartu kredit/debit.",
+      q: "What payment methods are available?",
+      a: "We accept bank transfers (BCA, Mandiri, BNI, BRI), e-wallets (GoPay, OVO, DANA), and credit/debit cards.",
     },
     {
-      q: "Apakah paket Gratis benar-benar gratis selamanya?",
-      a: "Ya! Paket Gratis bisa digunakan selamanya tanpa batas waktu. Anda hanya perlu upgrade jika membutuhkan lebih dari 5 invoice per bulan.",
+      q: "Is the Free plan really free forever?",
+      a: "Yes! The Free plan can be used forever with no time limit. You only need to upgrade if you need more than 5 invoices per month.",
     },
   ];
 
@@ -57,7 +57,7 @@ export default function PricingPage() {
         <X className="w-5 h-5 text-gray-300 mx-auto" />
       );
     }
-    if (val === -1) return <span className="font-medium">Tidak terbatas</span>;
+    if (val === -1) return <span className="font-medium">Unlimited</span>;
     return <span className="font-medium">{val}</span>;
   }
 
@@ -67,14 +67,13 @@ export default function PricingPage() {
       <section className="py-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="max-w-6xl mx-auto px-4 md:px-6 text-center">
           <Badge variant="outline" className="mb-4">
-            Harga Transparan
+            Transparent Pricing
           </Badge>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Pilih Paket yang Tepat untuk Bisnis Anda
+            Choose the Right Plan for Your Business
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Mulai gratis, upgrade sesuai pertumbuhan bisnis. Tanpa biaya
-            tersembunyi.
+            Start free, upgrade as your business grows. No hidden fees.
           </p>
         </div>
       </section>
@@ -95,7 +94,7 @@ export default function PricingPage() {
                 {plan.id === "pro" && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <Badge className="bg-blue-600 text-white px-4">
-                      Paling Populer
+                      Most Popular
                     </Badge>
                   </div>
                 )}
@@ -104,10 +103,10 @@ export default function PricingPage() {
                   <p className="text-sm text-gray-600">{plan.description}</p>
                   <div className="pt-4">
                     <span className="text-4xl font-bold">
-                      {plan.price === 0 ? "Gratis" : formatIDR(plan.price)}
+                      {plan.price === 0 ? "Free" : formatIDR(plan.price)}
                     </span>
                     {plan.price > 0 && (
-                      <span className="text-gray-600 ml-1">/bulan</span>
+                      <span className="text-gray-600 ml-1">/month</span>
                     )}
                   </div>
                 </CardHeader>
@@ -126,7 +125,7 @@ export default function PricingPage() {
                       variant={plan.id === "pro" ? "default" : "outline"}
                       size="lg"
                     >
-                      {plan.price === 0 ? "Mulai Gratis" : "Pilih Paket"}
+                      {plan.price === 0 ? "Start Free" : "Choose Plan"}
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
@@ -141,14 +140,14 @@ export default function PricingPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 md:px-6">
           <h2 className="text-2xl font-bold text-center mb-8">
-            Perbandingan Fitur
+            Feature Comparison
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
                   <th className="py-3 px-4 text-left font-medium text-gray-600">
-                    Fitur
+                    Feature
                   </th>
                   {plans.map((p) => (
                     <th
@@ -181,7 +180,7 @@ export default function PricingPage() {
       <section className="py-16 bg-white">
         <div className="max-w-3xl mx-auto px-4 md:px-6">
           <h2 className="text-2xl font-bold text-center mb-8">
-            Pertanyaan yang Sering Diajukan
+            Frequently Asked Questions
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, i) => (
@@ -198,14 +197,14 @@ export default function PricingPage() {
       <section className="py-16 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Mulai Buat Invoice Profesional Sekarang
+            Start Creating Professional Invoices Now
           </h2>
           <p className="text-lg mb-6 opacity-90">
-            Bergabung dengan ribuan bisnis Indonesia
+            Join thousands of Indonesian businesses
           </p>
           <Link href="/register">
             <Button size="lg" variant="secondary" className="text-lg px-8">
-              Daftar Gratis
+              Sign Up Free
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
