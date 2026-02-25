@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, User, Plus } from "lucide-react";
+import { LogOut, User, Plus, Settings } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,6 +31,7 @@ export function SiteHeader() {
   const nav = [
     { href: "/dashboard", label: "Dashboard" },
     { href: "/invoices", label: "Invoice" },
+    { href: "/clients", label: "Klien" },
     { href: "/profile", label: "Profil" },
   ];
 
@@ -102,6 +103,12 @@ export function SiteHeader() {
                     <Link href="/profile">
                       <User className="w-4 h-4 mr-2" />
                       Profil
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/settings">
+                      <Settings className="w-4 h-4 mr-2" />
+                      Pengaturan
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />

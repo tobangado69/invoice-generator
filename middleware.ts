@@ -13,7 +13,9 @@ export async function middleware(req: NextRequest) {
                      req.nextUrl.pathname.startsWith('/register');
   const isProtectedPage = req.nextUrl.pathname.startsWith('/dashboard') ||
                          req.nextUrl.pathname.startsWith('/invoices') ||
-                         req.nextUrl.pathname.startsWith('/profile');
+                         req.nextUrl.pathname.startsWith('/profile') ||
+                         req.nextUrl.pathname.startsWith('/clients') ||
+                         req.nextUrl.pathname.startsWith('/settings');
 
   // Skip auth check for non-protected pages
   if (!isAuthPage && !isProtectedPage) {
