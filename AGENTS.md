@@ -24,5 +24,12 @@ See `package.json` `scripts` section for the full list. Key commands:
 - There is one pre-existing lint error in `app/profile/page.tsx` (unescaped `'` entity) — this is in the existing codebase, not introduced by setup.
 - The `next.config.mjs` sets `eslint.ignoreDuringBuilds: true` and `typescript.ignoreBuildErrors: true`, so `npm run build` will succeed even with lint/type issues.
 
+### New SaaS pages
+- `/pricing` — Public pricing page with plan comparison, FAQ
+- `/clients` — Authenticated client management (CRUD with search)
+- `/settings` — Account settings, plan info, usage tracking
+- Subscription plan config is in `lib/plans.ts` (Free/Pro/Business tiers)
+- Client API routes at `/api/clients` and `/api/clients/[id]`
+
 ### Testing
 No automated test framework is configured. Manual testing is done via the browser (see `README.md` for the manual testing checklist). Register at `/register`, login at `/login`, then create invoices at `/invoices/new`.
