@@ -20,6 +20,27 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { id as idLocale, enUS as enLocale } from "date-fns/locale";
 
+const translations: Record<string, string> = {
+  "pdf.opened": "PDF Dibuka / PDF Opened",
+  "pdf.openedDescription": "PDF dibuka di tab baru / PDF opened in new tab",
+  "pdf.openFailed": "Gagal membuka PDF / Failed to open PDF",
+  "pdf.downloaded": "PDF Diunduh / PDF Downloaded",
+  "pdf.downloadedDescription": "File PDF berhasil diunduh / PDF file downloaded successfully",
+  "pdf.downloadFailed": "Gagal mengunduh PDF / Failed to download PDF",
+  "common.error": "Terjadi Kesalahan / Error",
+  "invoice.statusUpdated": "Status Diperbarui / Status Updated",
+  "invoice.markedAsPaid": "Invoice ditandai dibayar / Invoice marked as paid",
+  "invoice.markedAsSent": "Invoice ditandai terkirim / Invoice marked as sent",
+  "invoice.updateFailed": "Gagal memperbarui invoice / Failed to update invoice",
+  "invoice.deleted": "Invoice Dihapus / Invoice Deleted",
+  "invoice.deletedSuccess": "berhasil dihapus / deleted successfully",
+  "invoice.deleteFailed": "Gagal menghapus invoice / Failed to delete invoice",
+};
+
+function t(key: string): string {
+  return translations[key] || key;
+}
+
 export function InvoicePreview({
   invoice,
   readOnly = false,

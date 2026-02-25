@@ -14,6 +14,8 @@ model User {
   emailVerified DateTime? @map("email_verified")
   password      String    @map("password_hash")
   image         String?
+  plan          String    @default("free")
+  invoiceQuota  Int       @default(5) @map("invoice_quota")
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   
@@ -21,6 +23,7 @@ model User {
   sessions      Session[]
   company       Company?
   invoices      Invoice[]
+  clients       Client[]
   
   @@map("users")
 }
@@ -129,5 +132,23 @@ model InvoiceItem {
   invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
   
   @@map("invoice_items")
+}
+
+model Client {
+  id            Int      @id @default(autoincrement())
+  userId        String   @map("user_id")
+  name          String
+  email         String?
+  phone         String?
+  address       String?
+  npwp          String?
+  contactPerson String?  @map("contact_person")
+  notes         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("clients")
 }
 
