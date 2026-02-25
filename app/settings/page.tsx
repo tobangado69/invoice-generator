@@ -63,10 +63,10 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl md:text-3xl font-semibold">
-          Pengaturan / Settings
+          Settings
         </h1>
         <p className="text-muted-foreground">
-          Kelola akun, paket, dan pengaturan Anda
+          Manage your account, plan, and settings
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <CardTitle className="text-lg">
-                {user?.name || "Pengguna"}
+                {user?.name || "User"}
               </CardTitle>
               <CardDescription>{user?.email}</CardDescription>
             </div>
@@ -96,7 +96,7 @@ export default function SettingsPage() {
               className="bg-blue-50 text-blue-700 border-blue-200"
             >
               <Crown className="w-3 h-3 mr-1" />
-              Paket {currentPlan.name}
+              {currentPlan.name} Plan
             </Badge>
           </div>
         </CardContent>
@@ -107,10 +107,10 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <Settings2 className="w-4 h-4" />
-            Penggunaan / Usage
+            Usage
           </CardTitle>
           <CardDescription>
-            Penggunaan fitur pada paket Anda saat ini
+            Feature usage for your current plan
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -125,12 +125,12 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-muted-foreground" />
-                    <span>Invoice bulan ini</span>
+                    <span>Invoices this month</span>
                   </div>
                   <span className="font-medium">
                     {usage.invoiceCount} /{" "}
                     {usage.invoiceLimit === -1
-                      ? "Tidak terbatas"
+                      ? "Unlimited"
                       : usage.invoiceLimit}
                   </span>
                 </div>
@@ -146,12 +146,12 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-muted-foreground" />
-                    <span>Total klien</span>
+                    <span>Total clients</span>
                   </div>
                   <span className="font-medium">
                     {usage.clientCount} /{" "}
                     {usage.clientLimit === -1
-                      ? "Tidak terbatas"
+                      ? "Unlimited"
                       : usage.clientLimit}
                   </span>
                 </div>
@@ -171,7 +171,7 @@ export default function SettingsPage() {
       <div>
         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
           <CreditCard className="w-5 h-5" />
-          Paket Berlangganan
+          Subscription Plans
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {plans.map((plan) => {
@@ -187,19 +187,19 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-base">{plan.name}</CardTitle>
                     {isCurrent && (
-                      <Badge className="bg-blue-600">Aktif</Badge>
+                      <Badge className="bg-blue-600">Active</Badge>
                     )}
                     {plan.id === "pro" && !isCurrent && (
-                      <Badge variant="outline">Populer</Badge>
+                      <Badge variant="outline">Popular</Badge>
                     )}
                   </div>
                   <div className="pt-2">
                     <span className="text-2xl font-bold">
-                      {plan.price === 0 ? "Gratis" : formatIDR(plan.price)}
+                      {plan.price === 0 ? "Free" : formatIDR(plan.price)}
                     </span>
                     {plan.price > 0 && (
                       <span className="text-muted-foreground text-sm">
-                        /bulan
+                        /month
                       </span>
                     )}
                   </div>
@@ -214,7 +214,7 @@ export default function SettingsPage() {
                     ))}
                     {plan.features.length > 4 && (
                       <li className="text-muted-foreground text-xs">
-                        + {plan.features.length - 4} fitur lainnya
+                        + {plan.features.length - 4} more features
                       </li>
                     )}
                   </ul>
@@ -238,7 +238,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <Shield className="w-4 h-4" />
-            Tautan Cepat
+            Quick Links
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -248,7 +248,7 @@ export default function SettingsPage() {
                 variant="outline"
                 className="w-full justify-start"
               >
-                Profil Perusahaan
+                Company Profile
                 <ArrowUpRight className="w-4 h-4 ml-auto" />
               </Button>
             </Link>
@@ -257,7 +257,7 @@ export default function SettingsPage() {
                 variant="outline"
                 className="w-full justify-start"
               >
-                Lihat Semua Paket
+                View All Plans
                 <ArrowUpRight className="w-4 h-4 ml-auto" />
               </Button>
             </Link>

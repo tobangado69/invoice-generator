@@ -41,9 +41,9 @@ const STATUS_COLORS: Record<string, string> = {
 
 const STATUS_LABELS: Record<string, string> = {
   draft: "Draft",
-  sent: "Dikirim",
-  paid: "Dibayar",
-  overdue: "Terlambat",
+  sent: "Sent",
+  paid: "Paid",
+  overdue: "Overdue",
 };
 
 export default function DashboardPage() {
@@ -127,11 +127,11 @@ export default function DashboardPage() {
   const companyName =
     companyData?.success && companyData.data
       ? companyData.data.name
-      : "Selamat datang";
+      : "Welcome";
 
   const statCards = [
     {
-      title: "Total Invoice",
+      title: "Total Invoices",
       value: stats.totalInvoices.toString(),
       subtitle: `${stats.totalInvoices} invoice`,
       icon: FileText,
@@ -139,25 +139,25 @@ export default function DashboardPage() {
       bgColor: "bg-blue-50",
     },
     {
-      title: "Belum Dibayar",
+      title: "Unpaid",
       value: formatIDR(stats.pendingAmount),
-      subtitle: "Menunggu pembayaran",
+      subtitle: "Awaiting payment",
       icon: Clock,
       color: "text-amber-600",
       bgColor: "bg-amber-50",
     },
     {
-      title: "Sudah Dibayar",
+      title: "Paid",
       value: formatIDR(stats.paidAmount),
-      subtitle: "Total terbayar",
+      subtitle: "Total paid",
       icon: CheckCircle,
       color: "text-green-600",
       bgColor: "bg-green-50",
     },
     {
-      title: "PPN Terkumpul",
+      title: "VAT Collected",
       value: formatIDR(stats.ppnCollected),
-      subtitle: "Total pajak",
+      subtitle: "Total tax",
       icon: Calculator,
       color: "text-purple-600",
       bgColor: "bg-purple-50",
@@ -169,23 +169,23 @@ export default function DashboardPage() {
       <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold text-balance">
-            Selamat datang, {companyName}
+            Welcome, {companyName}
           </h1>
           <p className="text-muted-foreground">
-            Kelola invoice dan keuangan bisnis Anda
+            Manage your invoices and business finances
           </p>
         </div>
         <div className="flex gap-2">
           <Link href="/clients">
             <Button variant="outline">
               <Users className="w-4 h-4 mr-2" />
-              Klien
+              Clients
             </Button>
           </Link>
           <Link href="/invoices/new">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              Buat Invoice
+              Create Invoice
             </Button>
           </Link>
         </div>
@@ -232,7 +232,7 @@ export default function DashboardPage() {
             <Card className="lg:col-span-2">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">Pendapatan Bulanan</CardTitle>
+                  <CardTitle className="text-base">Monthly Revenue</CardTitle>
                   <TrendingUp className="w-4 h-4 text-muted-foreground" />
                 </div>
               </CardHeader>
@@ -261,9 +261,9 @@ export default function DashboardPage() {
                       <Tooltip
                         formatter={(value: number) => [
                           formatIDR(value),
-                          "Pendapatan",
+                          "Revenue",
                         ]}
-                        labelFormatter={(label) => `Bulan ${label}`}
+                        labelFormatter={(label) => `Month ${label}`}
                       />
                       <Bar
                         dataKey="revenue"
@@ -274,7 +274,7 @@ export default function DashboardPage() {
                   </ResponsiveContainer>
                 ) : (
                   <div className="h-[250px] flex items-center justify-center text-muted-foreground">
-                    Buat invoice untuk melihat grafik pendapatan
+                    Create an invoice to see the revenue chart
                   </div>
                 )}
               </CardContent>
@@ -282,7 +282,7 @@ export default function DashboardPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Status Invoice</CardTitle>
+                <CardTitle className="text-base">Invoice Status</CardTitle>
               </CardHeader>
               <CardContent>
                 {statusData.length > 0 ? (
@@ -325,7 +325,7 @@ export default function DashboardPage() {
                   </>
                 ) : (
                   <div className="h-[250px] flex items-center justify-center text-muted-foreground text-sm">
-                    Belum ada data
+                    No data yet
                   </div>
                 )}
               </CardContent>
@@ -343,9 +343,9 @@ export default function DashboardPage() {
                 <Plus className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="font-medium">Buat Invoice Baru</p>
+                <p className="font-medium">Create New Invoice</p>
                 <p className="text-sm text-muted-foreground">
-                  Buat faktur profesional
+                  Create a professional invoice
                 </p>
               </div>
               <ArrowUpRight className="w-4 h-4 ml-auto text-muted-foreground" />
@@ -359,9 +359,9 @@ export default function DashboardPage() {
                 <Users className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="font-medium">Kelola Klien</p>
+                <p className="font-medium">Manage Clients</p>
                 <p className="text-sm text-muted-foreground">
-                  Database klien Anda
+                  Your client database
                 </p>
               </div>
               <ArrowUpRight className="w-4 h-4 ml-auto text-muted-foreground" />
@@ -375,9 +375,9 @@ export default function DashboardPage() {
                 <TrendingUp className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <p className="font-medium">Pengaturan</p>
+                <p className="font-medium">Settings</p>
                 <p className="text-sm text-muted-foreground">
-                  Akun & paket Anda
+                  Your account & plan
                 </p>
               </div>
               <ArrowUpRight className="w-4 h-4 ml-auto text-muted-foreground" />
@@ -387,7 +387,7 @@ export default function DashboardPage() {
       </div>
 
       <section className="space-y-3">
-        <h2 className="text-lg font-medium">Invoice Terbaru</h2>
+        <h2 className="text-lg font-medium">Recent Invoices</h2>
         <InvoiceTable limit={5} />
       </section>
     </div>
