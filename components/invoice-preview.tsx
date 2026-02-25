@@ -21,20 +21,20 @@ import { format } from "date-fns";
 import { id as idLocale, enUS as enLocale } from "date-fns/locale";
 
 const translations: Record<string, string> = {
-  "pdf.opened": "PDF Dibuka / PDF Opened",
-  "pdf.openedDescription": "PDF dibuka di tab baru / PDF opened in new tab",
-  "pdf.openFailed": "Gagal membuka PDF / Failed to open PDF",
-  "pdf.downloaded": "PDF Diunduh / PDF Downloaded",
-  "pdf.downloadedDescription": "File PDF berhasil diunduh / PDF file downloaded successfully",
-  "pdf.downloadFailed": "Gagal mengunduh PDF / Failed to download PDF",
-  "common.error": "Terjadi Kesalahan / Error",
-  "invoice.statusUpdated": "Status Diperbarui / Status Updated",
-  "invoice.markedAsPaid": "Invoice ditandai dibayar / Invoice marked as paid",
-  "invoice.markedAsSent": "Invoice ditandai terkirim / Invoice marked as sent",
-  "invoice.updateFailed": "Gagal memperbarui invoice / Failed to update invoice",
-  "invoice.deleted": "Invoice Dihapus / Invoice Deleted",
-  "invoice.deletedSuccess": "berhasil dihapus / deleted successfully",
-  "invoice.deleteFailed": "Gagal menghapus invoice / Failed to delete invoice",
+  "pdf.opened": "PDF Opened",
+  "pdf.openedDescription": "PDF opened in a new tab",
+  "pdf.openFailed": "Failed to open PDF",
+  "pdf.downloaded": "PDF Downloaded",
+  "pdf.downloadedDescription": "PDF file downloaded successfully",
+  "pdf.downloadFailed": "Failed to download PDF",
+  "common.error": "Error",
+  "invoice.statusUpdated": "Status Updated",
+  "invoice.markedAsPaid": "Invoice marked as paid",
+  "invoice.markedAsSent": "Invoice marked as sent",
+  "invoice.updateFailed": "Failed to update invoice",
+  "invoice.deleted": "Invoice Deleted",
+  "invoice.deletedSuccess": "deleted successfully",
+  "invoice.deleteFailed": "Failed to delete invoice",
 };
 
 function t(key: string): string {
@@ -154,7 +154,7 @@ export function InvoicePreview({
   const handleDelete = async () => {
     if (
       !confirm(
-        "Apakah Anda yakin ingin menghapus invoice ini? / Are you sure you want to delete this invoice?"
+        "Are you sure you want to delete this invoice?"
       )
     ) {
       return;
@@ -177,11 +177,11 @@ export function InvoicePreview({
   };
 
   const statusBadge = {
-    paid: { color: "bg-green-100 text-green-700", label: "Dibayar / Paid" },
-    sent: { color: "bg-blue-100 text-blue-700", label: "Terkirim / Sent" },
+    paid: { color: "bg-green-100 text-green-700", label: "Paid" },
+    sent: { color: "bg-blue-100 text-blue-700", label: "Sent" },
     overdue: {
       color: "bg-red-100 text-red-700",
-      label: "Jatuh Tempo / Overdue",
+      label: "Overdue",
     },
     draft: { color: "bg-gray-100 text-gray-700", label: "Draft" },
   }[invoice.status] || {
@@ -199,7 +199,7 @@ export function InvoicePreview({
             variant="outline"
           >
             <Eye className="w-4 h-4 mr-2" />
-            {isDownloading ? "Membuka... / Opening..." : "Lihat PDF / View PDF"}
+            {isDownloading ? "Opening..." : "View PDF"}
           </Button>
           <Button
             onClick={handleDownloadPDF}
@@ -208,8 +208,8 @@ export function InvoicePreview({
           >
             <Download className="w-4 h-4 mr-2" />
             {isDownloadingFile
-              ? "Mengunduh... / Downloading..."
-              : "Unduh PDF / Download PDF"}
+              ? "Downloading..."
+              : "Download PDF"}
           </Button>
           {invoice.status !== "paid" && (
             <Button
@@ -218,7 +218,7 @@ export function InvoicePreview({
               disabled={updateInvoice.isPending}
             >
               <CheckCircle className="w-4 h-4 mr-2" />
-              Tandai Dibayar / Mark Paid
+              Mark Paid
             </Button>
           )}
           {invoice.status !== "sent" && invoice.status !== "paid" && (
@@ -228,7 +228,7 @@ export function InvoicePreview({
               disabled={updateInvoice.isPending}
             >
               <Send className="w-4 h-4 mr-2" />
-              Tandai Terkirim / Mark Sent
+              Mark Sent
             </Button>
           )}
           <Button
@@ -237,7 +237,7 @@ export function InvoicePreview({
             disabled={deleteInvoiceMutation.isPending}
           >
             <Trash2 className="w-4 h-4 mr-2" />
-            Hapus / Delete
+            Delete
           </Button>
         </div>
       )}
@@ -250,13 +250,13 @@ export function InvoicePreview({
               {invoice.invoiceNumber}
             </div>
             <div className="text-sm text-muted-foreground mt-2">
-              Tanggal / Date:{" "}
+              Date:{" "}
               {format(new Date(invoice.issueDate), "dd MMMM yyyy", {
                 locale: idLocale,
               })}
             </div>
             <div className="text-sm text-muted-foreground">
-              Jatuh Tempo / Due:{" "}
+              Due:{" "}
               {format(new Date(invoice.dueDate), "dd MMMM yyyy", {
                 locale: idLocale,
               })}
@@ -269,7 +269,7 @@ export function InvoicePreview({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
-            <div className="text-sm font-semibold mb-2">DARI / FROM:</div>
+            <div className="text-sm font-semibold mb-2">FROM:</div>
             <div className="text-sm">
               {companyData?.success && companyData.data ? (
                 <>
@@ -302,14 +302,13 @@ export function InvoicePreview({
                 </>
               ) : (
                 <div className="text-muted-foreground text-xs">
-                  (Data perusahaan akan ditampilkan di PDF / Company data will
-                  be shown in PDF)
+                  (Company data will be shown in PDF)
                 </div>
               )}
             </div>
           </div>
           <div>
-            <div className="text-sm font-semibold mb-2">KEPADA / BILL TO:</div>
+            <div className="text-sm font-semibold mb-2">BILL TO:</div>
             <div className="text-sm">
               <div className="font-medium">{invoice.clientName}</div>
               {invoice.clientEmail && (
@@ -336,10 +335,10 @@ export function InvoicePreview({
           <table className="w-full text-sm">
             <thead className="text-left text-muted-foreground bg-gray-50">
               <tr className="border-y">
-                <th className="py-2 px-3">Deskripsi / Description</th>
+                <th className="py-2 px-3">Description</th>
                 <th className="py-2 px-3 text-center">Qty</th>
-                <th className="py-2 px-3 text-right">Harga / Rate</th>
-                <th className="py-2 px-3 text-right">Jumlah / Amount</th>
+                <th className="py-2 px-3 text-right">Rate</th>
+                <th className="py-2 px-3 text-right">Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -366,7 +365,7 @@ export function InvoicePreview({
             {invoice.paymentTerms && (
               <div className="mb-4">
                 <div className="text-sm font-semibold mb-1">
-                  Syarat Pembayaran / Payment Terms:
+                  Payment Terms:
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {invoice.paymentTerms}
@@ -376,7 +375,7 @@ export function InvoicePreview({
             {invoice.notes && (
               <div>
                 <div className="text-sm font-semibold mb-1">
-                  Catatan / Notes:
+                  Notes:
                 </div>
                 <div className="text-sm text-muted-foreground whitespace-pre-wrap">
                   {invoice.notes}

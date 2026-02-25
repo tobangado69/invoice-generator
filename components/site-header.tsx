@@ -31,23 +31,23 @@ export function SiteHeader() {
   const nav = [
     { href: "/dashboard", label: "Dashboard" },
     { href: "/invoices", label: "Invoice" },
-    { href: "/clients", label: "Klien" },
-    { href: "/profile", label: "Profil" },
+    { href: "/clients", label: "Clients" },
+    { href: "/profile", label: "Profile" },
   ];
 
   const handleLogout = async () => {
     try {
       await signOut();
       toast({
-        title: "Berhasil keluar",
-        description: "Anda telah keluar dari sistem",
+        title: "Signed out successfully",
+        description: "You have been signed out",
       });
       router.push("/");
       router.refresh();
     } catch (error) {
       toast({
-        title: "Kesalahan",
-        description: "Terjadi kesalahan jaringan",
+        title: "Error",
+        description: "A network error occurred",
         variant: "destructive",
       });
     }
@@ -85,7 +85,7 @@ export function SiteHeader() {
                   className="bg-primary text-primary-foreground hover:opacity-90"
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Buat Baru
+                  New Invoice
                 </Button>
               </Link>
 
@@ -93,28 +93,28 @@ export function SiteHeader() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm">
                     <User className="w-4 h-4 mr-2" />
-                    {user?.email || "Pengguna"}
+                    {user?.email || "User"}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>Profil</DropdownMenuLabel>
+                  <DropdownMenuLabel>Profile</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link href="/profile">
                       <User className="w-4 h-4 mr-2" />
-                      Profil
+                      Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/settings">
                       <Settings className="w-4 h-4 mr-2" />
-                      Pengaturan
+                      Settings
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="w-4 h-4 mr-2" />
-                    Keluar
+                    Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -128,11 +128,11 @@ export function SiteHeader() {
             <div className="flex items-center gap-2">
               <Link href="/login">
                 <Button variant="ghost" size="sm">
-                  Masuk
+                  Sign In
                 </Button>
               </Link>
               <Link href="/register">
-                <Button size="sm">Daftar</Button>
+                <Button size="sm">Sign Up</Button>
               </Link>
             </div>
           )}

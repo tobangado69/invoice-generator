@@ -27,9 +27,9 @@ import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 
 const statusLabels: Record<string, string> = {
-  paid: "Dibayar",
-  sent: "Dikirim",
-  overdue: "Terlambat",
+  paid: "Paid",
+  sent: "Sent",
+  overdue: "Overdue",
   draft: "Draft",
 };
 
@@ -104,7 +104,7 @@ export function InvoiceTable({ limit }: { limit?: number }) {
         <CardTitle className="text-base">Invoice</CardTitle>
         <div className="flex gap-2 w-full sm:w-auto">
           <Input
-            placeholder="Cari invoice..."
+            placeholder="Search invoices..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full sm:w-64"
@@ -114,11 +114,11 @@ export function InvoiceTable({ limit }: { limit?: number }) {
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Semua</SelectItem>
+              <SelectItem value="all">All</SelectItem>
               <SelectItem value="draft">Draft</SelectItem>
-              <SelectItem value="sent">Dikirim</SelectItem>
-              <SelectItem value="paid">Dibayar</SelectItem>
-              <SelectItem value="overdue">Terlambat</SelectItem>
+              <SelectItem value="sent">Sent</SelectItem>
+              <SelectItem value="paid">Paid</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -127,21 +127,21 @@ export function InvoiceTable({ limit }: { limit?: number }) {
         {filteredInvoices.length === 0 ? (
           <div className="h-32 grid place-items-center text-muted-foreground">
             {query || statusFilter !== "all"
-              ? "Tidak ada hasil"
-              : "Belum ada invoice"}
+              ? "No results"
+              : "No invoices yet"}
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="text-muted-foreground text-left">
                 <tr>
-                  <th className="py-2 pr-4">Nomor</th>
-                  <th className="py-2 pr-4">Klien</th>
-                  <th className="py-2 pr-4">Tanggal</th>
-                  <th className="py-2 pr-4">Jatuh Tempo</th>
+                  <th className="py-2 pr-4">Number</th>
+                  <th className="py-2 pr-4">Client</th>
+                  <th className="py-2 pr-4">Date</th>
+                  <th className="py-2 pr-4">Due Date</th>
                   <th className="py-2 pr-4 text-right">Total</th>
                   <th className="py-2 pr-4">Status</th>
-                  <th className="py-2 pr-0 text-right">Aksi</th>
+                  <th className="py-2 pr-0 text-right">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -182,7 +182,7 @@ export function InvoiceTable({ limit }: { limit?: number }) {
                     <td className="py-3 pr-0 text-right">
                       <Link href={`/invoices/${invoice.id}`}>
                         <Button variant="ghost" size="sm">
-                          Lihat
+                          View
                         </Button>
                       </Link>
                     </td>

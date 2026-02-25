@@ -149,7 +149,7 @@ export function InvoiceForm() {
     if (!clientName.trim()) {
       toast({
         title: "Error",
-        description: "Nama klien wajib diisi / Client name is required",
+        description: "Client name is required",
         variant: "destructive",
       });
       return;
@@ -159,7 +159,7 @@ export function InvoiceForm() {
       toast({
         title: "Error",
         description:
-          "Minimal satu item diperlukan / At least one item required",
+          "At least one item is required",
         variant: "destructive",
       });
       return;
@@ -168,8 +168,8 @@ export function InvoiceForm() {
     // Validate client NPWP if provided
     if (clientNpwp && !validateNPWP(clientNpwp) && clientNpwp.length >= 15) {
       toast({
-        title: "NPWP Klien Tidak Valid / Invalid Client NPWP",
-        description: "Format NPWP harus: XX.XXX.XXX.X-XXX.XXX",
+        title: "Invalid Client Tax ID",
+        description: "Tax ID format must be: XX.XXX.XXX.X-XXX.XXX",
         variant: "destructive",
       });
       return;
@@ -197,9 +197,9 @@ export function InvoiceForm() {
 
       if (result.success) {
         toast({
-          title: "Invoice Dibuat / Invoice Created",
-          description: `${invoiceNumber} disimpan sebagai ${
-            status === "draft" ? "draft" : "terkirim"
+          title: "Invoice Created",
+          description: `${invoiceNumber} saved as ${
+            status === "draft" ? "draft" : "sent"
           }`,
         });
         router.push(`/invoices/${result.data.id}`);
@@ -207,7 +207,7 @@ export function InvoiceForm() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Gagal membuat invoice / Failed to create invoice",
+        description: "Failed to create invoice",
         variant: "destructive",
       });
     }
@@ -231,23 +231,22 @@ export function InvoiceForm() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Buat Invoice / Create Invoice</h1>
+        <h1 className="text-3xl font-bold">Create Invoice</h1>
         <p className="text-gray-600 mt-1">
-          Buat faktur profesional dengan PPN dan NPWP / Create professional
-          invoice with VAT and Tax ID
+          Create a professional invoice with VAT and Tax ID
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Detail Invoice / Invoice Details</CardTitle>
+          <CardTitle>Invoice Details</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Invoice Header */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="invoiceNumber">
-                Nomor Invoice / Invoice Number
+                Invoice Number
               </Label>
               <Input
                 id="invoiceNumber"
@@ -257,7 +256,7 @@ export function InvoiceForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="issueDate">Tanggal Terbit / Issue Date</Label>
+              <Label htmlFor="issueDate">Issue Date</Label>
               <Input
                 id="issueDate"
                 type="date"
@@ -266,7 +265,7 @@ export function InvoiceForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="dueDate">Tanggal Jatuh Tempo / Due Date</Label>
+              <Label htmlFor="dueDate">Due Date</Label>
               <Input
                 id="dueDate"
                 type="date"
@@ -279,16 +278,16 @@ export function InvoiceForm() {
           {/* Client Information */}
           <div>
             <h3 className="text-lg font-semibold mb-4">
-              Informasi Klien / Client Information
+              Client Information
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="clientName">Nama Klien / Client Name *</Label>
+                <Label htmlFor="clientName">Client Name *</Label>
                 <Input
                   id="clientName"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  placeholder="PT. Contoh Klien"
+                  placeholder="Example Client Inc."
                 />
               </div>
               <div className="space-y-2">
@@ -298,11 +297,11 @@ export function InvoiceForm() {
                   type="email"
                   value={clientEmail}
                   onChange={(e) => setClientEmail(e.target.value)}
-                  placeholder="klien@email.com"
+                  placeholder="client@email.com"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="clientAddress">Alamat / Address</Label>
+                <Label htmlFor="clientAddress">Address</Label>
                 <Textarea
                   id="clientAddress"
                   value={clientAddress}
@@ -313,7 +312,7 @@ export function InvoiceForm() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="clientNpwp">
-                  NPWP Klien / Client Tax ID (Optional)
+                  Client Tax ID (Optional)
                 </Label>
                 <Input
                   id="clientNpwp"
@@ -326,7 +325,7 @@ export function InvoiceForm() {
                   !validateNPWP(clientNpwp) &&
                   clientNpwp.length >= 15 && (
                     <p className="text-sm text-red-500">
-                      Format NPWP tidak valid
+                      Invalid tax ID format
                     </p>
                   )}
               </div>
@@ -336,10 +335,10 @@ export function InvoiceForm() {
           {/* Line Items */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Item / Line Items</h3>
+              <h3 className="text-lg font-semibold">Line Items</h3>
               <Button type="button" onClick={addItem} size="sm">
                 <Plus className="w-4 h-4 mr-2" />
-                Tambah Item / Add Item
+                Add Item
               </Button>
             </div>
 
@@ -347,13 +346,13 @@ export function InvoiceForm() {
               {items.map((item, index) => (
                 <div key={index} className="grid grid-cols-12 gap-2 items-end">
                   <div className="col-span-12 md:col-span-5 space-y-2">
-                    <Label className="text-xs">Deskripsi / Description</Label>
+                    <Label className="text-xs">Description</Label>
                     <Input
                       value={item.description}
                       onChange={(e) =>
                         updateItem(index, "description", e.target.value)
                       }
-                      placeholder="Jasa desain website / Web design services"
+                      placeholder="Web design services"
                     />
                   </div>
                   <div className="col-span-4 md:col-span-2 space-y-2">
@@ -373,7 +372,7 @@ export function InvoiceForm() {
                     />
                   </div>
                   <div className="col-span-4 md:col-span-2 space-y-2">
-                    <Label className="text-xs">Harga / Rate</Label>
+                    <Label className="text-xs">Rate</Label>
                     <Input
                       type="number"
                       min="0"
@@ -389,7 +388,7 @@ export function InvoiceForm() {
                     />
                   </div>
                   <div className="col-span-3 md:col-span-2 space-y-2">
-                    <Label className="text-xs">Jumlah / Amount</Label>
+                    <Label className="text-xs">Amount</Label>
                     <div className="h-10 flex items-center px-3 bg-gray-50 rounded border">
                       <span className="text-sm font-medium">
                         {formatIDR(item.amount || 0)}
@@ -417,10 +416,10 @@ export function InvoiceForm() {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <Label htmlFor="usePPN" className="text-base font-semibold">
-                  Gunakan PPN / Use VAT
+                  Apply VAT
                 </Label>
                 <p className="text-sm text-gray-600 mt-1">
-                  Tambahkan Pajak Pertambahan Nilai / Add Value Added Tax
+                  Add Value Added Tax (PPN)
                 </p>
               </div>
               <Switch
@@ -432,7 +431,7 @@ export function InvoiceForm() {
 
             {usePPN && (
               <div className="space-y-2">
-                <Label htmlFor="ppnRate">Tarif PPN (%) / VAT Rate (%)</Label>
+                <Label htmlFor="ppnRate">VAT Rate (%)</Label>
                 <Input
                   id="ppnRate"
                   type="number"
@@ -450,11 +449,11 @@ export function InvoiceForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="paymentTerms">
-                Syarat Pembayaran / Payment Terms
+                Payment Terms
               </Label>
               <Select value={paymentTerms} onValueChange={setPaymentTerms}>
                 <SelectTrigger id="paymentTerms">
-                  <SelectValue placeholder="Pilih syarat pembayaran / Select terms" />
+                  <SelectValue placeholder="Select payment terms" />
                 </SelectTrigger>
                 <SelectContent>
                   {PAYMENT_TERMS_PRESETS.map((term) => (
@@ -467,12 +466,12 @@ export function InvoiceForm() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="notes">Catatan / Notes</Label>
+              <Label htmlFor="notes">Notes</Label>
               <Textarea
                 id="notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Terima kasih atas kepercayaan Anda / Thank you for your business"
+                placeholder="Thank you for your business"
                 rows={2}
               />
             </div>
@@ -517,7 +516,7 @@ export function InvoiceForm() {
             onClick={() => router.push("/invoices")}
             disabled={createInvoiceMutation.isPending}
           >
-            Batal / Cancel
+            Cancel
           </Button>
           <Button
             type="button"
@@ -525,7 +524,7 @@ export function InvoiceForm() {
             onClick={() => handleSubmit("draft")}
             disabled={createInvoiceMutation.isPending}
           >
-            Simpan Draft / Save Draft
+            Save Draft
           </Button>
           <Button
             type="button"
@@ -533,8 +532,8 @@ export function InvoiceForm() {
             disabled={createInvoiceMutation.isPending}
           >
             {createInvoiceMutation.isPending
-              ? "Membuat... / Creating..."
-              : "Buat & Kirim / Create & Send"}
+              ? "Creating..."
+              : "Create & Send"}
           </Button>
         </CardFooter>
       </Card>
