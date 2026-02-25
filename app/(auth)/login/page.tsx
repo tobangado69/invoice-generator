@@ -35,17 +35,17 @@ export default function LoginPage() {
       const result = await signIn(email, password);
 
       if (result?.error) {
-        setError("Email atau password salah");
+        setError("Incorrect email or password");
       } else if (result?.ok) {
         toast({
-          title: "Berhasil masuk",
-          description: "Selamat datang kembali!",
+          title: "Signed in successfully",
+          description: "Welcome back!",
         });
         router.push("/dashboard");
         router.refresh();
       }
     } catch (err) {
-      setError("Terjadi kesalahan");
+      setError("An error occurred");
     } finally {
       setIsLoading(false);
     }
@@ -54,9 +54,9 @@ export default function LoginPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Masuk ke Akun Anda</CardTitle>
+        <CardTitle>Sign In to Your Account</CardTitle>
         <CardDescription>
-          Masukkan email dan password untuk melanjutkan
+          Enter your email and password to continue
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
@@ -72,7 +72,7 @@ export default function LoginPage() {
             <Input
               id="email"
               type="email"
-              placeholder="nama@perusahaan.com"
+              placeholder="name@company.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -96,16 +96,16 @@ export default function LoginPage() {
 
         <CardFooter className="flex flex-col space-y-4">
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Memuat..." : "Masuk"}
+            {isLoading ? "Loading..." : "Sign In"}
           </Button>
 
           <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-            Belum punya akun?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
               className="text-blue-600 hover:underline dark:text-blue-400"
             >
-              Daftar sekarang
+              Sign up now
             </Link>
           </p>
         </CardFooter>

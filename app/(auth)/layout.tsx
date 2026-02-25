@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             InvoiceFlow
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Generator Invoice untuk UMKM Indonesia
+            Professional Invoice Generator
           </p>
         </div>
         {children}

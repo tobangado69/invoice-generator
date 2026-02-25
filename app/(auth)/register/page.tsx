@@ -33,12 +33,12 @@ export default function RegisterPage() {
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Password tidak cocok");
+      setError("Passwords do not match");
       return;
     }
 
     if (password.length < 8) {
-      setError("Password minimal 8 karakter");
+      setError("Password must be at least 8 characters");
       return;
     }
 
@@ -48,8 +48,8 @@ export default function RegisterPage() {
       await signUp(name, email, password);
 
       toast({
-        title: "Pendaftaran berhasil!",
-        description: "Anda akan dialihkan ke dashboard",
+        title: "Registration successful!",
+        description: "You will be redirected to the dashboard",
       });
 
       const result = await signIn(email, password);
@@ -58,7 +58,7 @@ export default function RegisterPage() {
         router.refresh();
       }
     } catch (err: any) {
-      setError(err.message || "Terjadi kesalahan saat pendaftaran");
+      setError(err.message || "An error occurred during registration");
     } finally {
       setIsLoading(false);
     }
@@ -67,9 +67,9 @@ export default function RegisterPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Buat Akun Baru</CardTitle>
+        <CardTitle>Create a New Account</CardTitle>
         <CardDescription>
-          Daftar untuk mulai membuat invoice profesional
+          Sign up to start creating professional invoices
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
@@ -81,11 +81,11 @@ export default function RegisterPage() {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="name">Nama Lengkap</Label>
+            <Label htmlFor="name">Full Name</Label>
             <Input
               id="name"
               type="text"
-              placeholder="Nama Anda"
+              placeholder="Your Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -98,7 +98,7 @@ export default function RegisterPage() {
             <Input
               id="email"
               type="email"
-              placeholder="nama@perusahaan.com"
+              placeholder="name@company.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -111,7 +111,7 @@ export default function RegisterPage() {
             <Input
               id="password"
               type="password"
-              placeholder="Minimal 8 karakter"
+              placeholder="At least 8 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -120,11 +120,11 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Konfirmasi Password</Label>
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
             <Input
               id="confirmPassword"
               type="password"
-              placeholder="Ulangi password"
+              placeholder="Repeat password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -135,16 +135,16 @@ export default function RegisterPage() {
 
         <CardFooter className="flex flex-col space-y-4">
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Memuat..." : "Daftar"}
+            {isLoading ? "Loading..." : "Sign Up"}
           </Button>
 
           <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-            Sudah punya akun?{" "}
+            Already have an account?{" "}
             <Link
               href="/login"
               className="text-blue-600 hover:underline dark:text-blue-400"
             >
-              Masuk
+              Sign in
             </Link>
           </p>
         </CardFooter>
